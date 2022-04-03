@@ -3,6 +3,8 @@
 namespace JeffersonSimaoGoncalves\NovaPermission;
 
 use Gate;
+use JeffersonSimaoGoncalves\NovaPermission\Nova\Role;
+use JeffersonSimaoGoncalves\NovaPermission\Nova\Permission;
 use JeffersonSimaoGoncalves\NovaPermission\Policy\PermissionPolicy;
 use JeffersonSimaoGoncalves\NovaPermission\Policy\RolePolicy;
 use Laravel\Nova\Nova;
