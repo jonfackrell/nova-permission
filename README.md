@@ -13,7 +13,7 @@ You can install the package in to a Laravel app that uses [Nova](https://nova.la
 composer require jeffersonsimaogoncalves/nova-permission
 ```
 
-Go through the [Installation](https://github.com/spatie/laravel-permission#installation) section in order to setup [laravel-permission](https://packagist.org/packages/spatie/laravel-permission).
+Go through the [Installation](https://spatie.be/docs/laravel-permission/v5/introduction) section in order to setup [laravel-permission](https://packagist.org/packages/spatie/laravel-permission).
 
 Next up, you must register the tool with Nova. This is typically done in the `tools` method of the `NovaServiceProvider`.
 
