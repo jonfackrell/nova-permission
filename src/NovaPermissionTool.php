@@ -7,7 +7,7 @@ use JeffersonSimaoGoncalves\NovaPermission\Policy\PermissionPolicy;
 use JeffersonSimaoGoncalves\NovaPermission\Policy\RolePolicy;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
-use function JeffersonSimaoGoncalves\NovaPermission\config;
+use function config;
 
 class NovaPermissionTool extends Tool
 {
