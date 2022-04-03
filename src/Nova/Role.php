@@ -1,27 +1,33 @@
 <?php
 
-namespace Vyuldashev\NovaPermission;
+namespace JeffersonSimaoGoncalves\NovaPermission\Nova;
 
+use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
+use JeffersonSimaoGoncalves\NovaPermission\Nova\Fields\PermissionBooleanGroup;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Nova;
-use Laravel\Nova\Resource;
 use Spatie\Permission\PermissionRegistrar;
+use function __;
+use function app;
+use function collect;
+use function config;
+use function getModelForGuard;
 
-class Permission extends Resource
+class Role extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \Spatie\Permission\Models\Permission::class;
+    public static $model = \Spatie\Permission\Models\Role::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -41,7 +47,7 @@ class Permission extends Resource
 
     public static function getModel()
     {
-        return app(PermissionRegistrar::class)->getPermissionClass();
+        return app(PermissionRegistrar::class)->getRoleClass();
     }
 
     /**
@@ -49,7 +55,7 @@ class Permission extends Resource
      *
      * @return string
      */
-    public static function group(): string
+    public static function group()
     {
         return __('nova-permission-tool::navigation.sidebar-label');
     }
@@ -60,19 +66,19 @@ class Permission extends Resource
      * @param Request $request
      * @return bool
      */
-    public static function availableForNavigation(Request $request): bool
+    public static function availableForNavigation(Request $request)
     {
-        return Gate::allows('viewAny', app(PermissionRegistrar::class)->getPermissionClass());
+        return Gate::allows('viewAny', app(PermissionRegistrar::class)->getRoleClass());
     }
 
     public static function label()
     {
-        return __('nova-permission-tool::resources.Permissions');
+        return __('nova-permission-tool::resources.Roles');
     }
 
     public static function singularLabel()
     {
-        return __('nova-permission-tool::resources.Permission');
+        return __('nova-permission-tool::resources.Role');
     }
 
     /**
@@ -81,7 +87,7 @@ class Permission extends Resource
      * @param Request $request
      * @return array
      */
-    public function fields(Request $request): array
+    public function fields(Request $request)
     {
         $guardOptions = collect(config('auth.guards'))->mapWithKeys(function ($value, $key) {
             return [$key => $key];
@@ -92,25 +98,26 @@ class Permission extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('nova-permission-tool::permissions.name'), 'name')
-                ->rules(['required', 'string', 'max:255'])
-                ->creationRules('unique:'.config('permission.table_names.permissions'))
-                ->updateRules('unique:'.config('permission.table_names.permissions').',name,{{resourceId}}'),
+            Text::make(__('nova-permission-tool::roles.name'), 'name')
+                ->rules([
+                    'required',
+                    'string',
+                    'max:255',
+                ])
+                ->creationRules('unique:' . config('permission.table_names.roles'))
+                ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}'),
 
-            Text::make(__('nova-permission-tool::permissions.display_name'), function () {
-                return __('nova-permission-tool::permissions.display_names.'.$this->name);
-            })->canSee(function () {
-                return is_array(__('nova-permission-tool::permissions.display_names'));
-            }),
-
-            Select::make(__('nova-permission-tool::permissions.guard_name'), 'guard_name')
+            Select::make(__('nova-permission-tool::roles.guard_name'), 'guard_name')
                 ->options($guardOptions->toArray())
-                ->rules(['required', Rule::in($guardOptions)]),
+                ->rules([
+                    'required',
+                    Rule::in($guardOptions),
+                ]),
 
-            DateTime::make(__('nova-permission-tool::permissions.created_at'), 'created_at')->exceptOnForms(),
-            DateTime::make(__('nova-permission-tool::permissions.updated_at'), 'updated_at')->exceptOnForms(),
+            DateTime::make(__('nova-permission-tool::roles.created_at'), 'created_at')->exceptOnForms(),
+            DateTime::make(__('nova-permission-tool::roles.updated_at'), 'updated_at')->exceptOnForms(),
 
-            RoleBooleanGroup::make(__('nova-permission-tool::permissions.roles'), 'roles'),
+            PermissionBooleanGroup::make(__('nova-permission-tool::roles.permissions'), 'permissions'),
 
             MorphToMany::make($userResource::label(), 'users', $userResource)
                 ->searchable()
@@ -124,7 +131,7 @@ class Permission extends Resource
      * @param Request $request
      * @return array
      */
-    public function cards(Request $request): array
+    public function cards(Request $request)
     {
         return [];
     }
@@ -135,7 +142,7 @@ class Permission extends Resource
      * @param Request $request
      * @return array
      */
-    public function filters(Request $request): array
+    public function filters(Request $request)
     {
         return [];
     }
@@ -146,7 +153,7 @@ class Permission extends Resource
      * @param Request $request
      * @return array
      */
-    public function lenses(Request $request): array
+    public function lenses(Request $request)
     {
         return [];
     }
@@ -157,10 +164,8 @@ class Permission extends Resource
      * @param Request $request
      * @return array
      */
-    public function actions(Request $request): array
+    public function actions(Request $request)
     {
-        return [
-            new AttachToRole,
-        ];
+        return [];
     }
 }

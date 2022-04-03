@@ -1,11 +1,12 @@
 <?php
 
-namespace Vyuldashev\NovaPermission;
+namespace JeffersonSimaoGoncalves\NovaPermission\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use JeffersonSimaoGoncalves\NovaPermission\Nova\Role;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;

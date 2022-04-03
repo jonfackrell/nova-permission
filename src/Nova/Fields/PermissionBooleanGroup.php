@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyuldashev\NovaPermission;
+namespace JeffersonSimaoGoncalves\NovaPermission\Nova\Fields;
 
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\BooleanGroup;
@@ -8,6 +8,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Spatie\Permission\Models\Permission as PermissionModel;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasPermissions;
+use function app;
+use function collect;
 
 class PermissionBooleanGroup extends BooleanGroup
 {
@@ -38,7 +40,7 @@ class PermissionBooleanGroup extends BooleanGroup
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        if (! $request->exists($requestAttribute)) {
+        if (!$request->exists($requestAttribute)) {
             return;
         }
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vyuldashev\NovaPermission;
+namespace JeffersonSimaoGoncalves\NovaPermission;
 
+use Illuminate\Support\Str;
 use Laravel\Nova\Nova;
 use Spatie\Permission\PermissionRegistrar;
-use Illuminate\Support\Str;
 
 class ForgetCachedPermissions
 {
