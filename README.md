@@ -154,7 +154,7 @@ A new menu item called "Permissions & Roles" will appear in your Nova app after 
 
 ## Reporting Issues
 
-If you have a problem with this plugin or any bug, please open an issue on [GitHub](https://github.com/jeffersonsimaogoncalves/cakephp-rest-api/issues).
+If you have a problem with this plugin or any bug, please open an issue on [GitHub](https://github.com/jeffersonsimaogoncalves/nova-permission/issues).
 
 ## Credits
 
