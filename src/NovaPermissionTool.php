@@ -2,6 +2,7 @@
 
 namespace JeffersonSimaoGoncalves\NovaPermission;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use JeffersonSimaoGoncalves\NovaPermission\Nova\Permission;
 use JeffersonSimaoGoncalves\NovaPermission\Nova\Role;
@@ -61,5 +62,9 @@ class NovaPermissionTool extends Tool
         $this->permissionPolicy = $permissionPolicy;
 
         return $this;
+    }
+ 
+    public function menu(Request $request)
+    {
     }
 }
