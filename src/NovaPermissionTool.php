@@ -10,6 +10,7 @@ use JeffersonSimaoGoncalves\NovaPermission\Policy\PermissionPolicy;
 use JeffersonSimaoGoncalves\NovaPermission\Policy\RolePolicy;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use Laravel\Nova\NovaRequest;
 use function config;
 
 class NovaPermissionTool extends Tool
@@ -34,6 +35,17 @@ class NovaPermissionTool extends Tool
 
         Gate::policy(config('permission.models.permission'), $this->permissionPolicy);
         Gate::policy(config('permission.models.role'), $this->rolePolicy);
+    }
+
+    /**
+     * Build the menu that renders the navigation links for the tool.
+     *
+     * @param  Request  $request
+     * @return mixed
+     */
+    public function menu(Request $request)
+    {
+        //
     }
 
     public function roleResource(string $roleResource): NovaPermissionTool
@@ -62,9 +74,5 @@ class NovaPermissionTool extends Tool
         $this->permissionPolicy = $permissionPolicy;
 
         return $this;
-    }
- 
-    public function menu(Request $request)
-    {
     }
 }

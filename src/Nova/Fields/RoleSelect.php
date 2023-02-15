@@ -19,8 +19,8 @@ class RoleSelect extends Select
             $name,
             $attribute,
             $resolveCallback ?? static function (Collection $roles) {
-                return optional($roles->first())->name;
-            }
+            return optional($roles->first())->name;
+        }
         );
 
         $roleClass = app(PermissionRegistrar::class)->getRoleClass();
@@ -39,16 +39,16 @@ class RoleSelect extends Select
     {
         return $this->displayUsing(function ($value) {
             return collect($this->meta['options'])
-                    ->where('value', optional($value->first())->name)
-                    ->first()['label'] ?? optional($value->first())->name;
+                ->where('value', optional($value->first())->name)
+                ->first()['label'] ?? optional($value->first())->name;
         });
     }
 
     /**
-     * @param NovaRequest $request
-     * @param string $requestAttribute
-     * @param HasPermissions $model
-     * @param string $attribute
+     * @param  NovaRequest  $request
+     * @param  string  $requestAttribute
+     * @param  HasPermissions  $model
+     * @param  string  $attribute
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
