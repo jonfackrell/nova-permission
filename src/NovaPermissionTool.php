@@ -75,9 +75,4 @@ class NovaPermissionTool extends Tool
 
         return $this;
     }
-
-    public function menu(Request $request)
-    {
-        return null;
-    }
 }
